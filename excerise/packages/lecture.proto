@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package myCompany.mooc;
+
+import "article.proto";
+import "video.proto";
+
+message Lecture {
+  // package name can be referenced in two diffenent ways, either specfying full name
+  // referencing only the part which is differed
+  oneof content {
+    myCompany.mooc.content.Video video = 1;
+    content.Article article = 2;
+  }
+}
+
