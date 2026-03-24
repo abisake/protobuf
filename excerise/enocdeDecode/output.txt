@@ -1,0 +1,20 @@
+name: "Protocol Buffers"
+authors: "Google"
+authors: "Linux Foundation"
+lectures {
+  key: "Encoding & Decoding"
+  value {
+    article {
+      text: "Encoding & Decoding via flags"
+    }
+  }
+}
+lectures {
+  key: "Introduction"
+  value {
+    video {
+      video_type: MP4
+      url: "dummy.com"
+    }
+  }
+}
