@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+message Video {
+  enum VideoType {
+    UNKNOWN = 0;
+    MP4 = 1;
+    MOV = 2;
+    UN_SUPPORTED_TYPE = 3;
+  }
+
+  VideoType video_type = 2;
+  string url = 3;
+}
+
+message Article {
+  string text = 1;
+}
+
+message Course {
+  string name = 1;
+  repeated string authors = 2;
+  oneof content_type {
+    Video video = 4;
+    Article article = 5;
+  }
+}
+
+// Look at the tag numbers, as the video & article
+// is nested, the tag number will be shared among
+// the structures
