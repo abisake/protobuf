@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+enum Videotype {
+  UNKNOWN = 0;
+  MP4 = 1;
+  MOV = 2;
+  UNSUPPORTED_TYPE = 3;
+}
+
+message Video {
+  Videotype video_type = 1;
+  string url = 2;
+}
+
+message Article {
+  string text = 1;
+}
+
+message ContentType {
+  oneof type {
+    Video video = 1;
+    Article article = 2;
+  }
+}
+
+message Lecture {
+  ContentType content_type = 1;
+}
+
+message Course {
+  string name = 1;
+  repeated string authors = 2;
+  map<string, Lecture> lecture = 3;
+}
