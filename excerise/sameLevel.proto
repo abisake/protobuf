@@ -30,5 +30,5 @@ message Lecture {
 message Course {
   string name = 1;
   repeated string authors = 2;
-  Lecture lecture = 3;
+  map<string, Lecture> lecture = 3;
 }
