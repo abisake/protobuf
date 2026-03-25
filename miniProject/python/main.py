@@ -105,6 +105,29 @@ def wrapper():
         # many more wrappers
     ]
 
+def file():
+    # we serialize a proto message into a .bin file and 
+    # deserialize it, the content should match
+    acc1 = account()
+    # output file
+    path = 'account.bin'
+    
+    print(f"Converting and writing into bin ------\n{acc1}")
+    with open(path, 'wb') as bin:
+        # output will be bytes string
+        bytes_str = acc1.SerializeToString()
+        bin.write(bytes_str)
+    
+    print("Data is successfully converted and stored-------")
+    
+    print("Reading from file------")
+    with open(path, 'rb') as bin:
+        acc1 = acc.Account().FromString(bin.read())
+        
+    print(f"Data is {acc1}")
+    print("Done")
+            
+
 if __name__ == "__main__":
     # A map where key=arguments, value=function needs to be called
     functionMap = {
@@ -117,7 +140,8 @@ if __name__ == "__main__":
         'phone2'    :   phone_book2,
         'field1'    :   field_mask1,
         'field2'    :   field_mask2,
-        'wrappers'  :   wrapper
+        'wrappers'  :   wrapper,
+        'file'      :   file,
     }
     
     # on calling this program, more than 2 flags should throw error
