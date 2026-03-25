@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message PhoneBook {
+  map<string, string> contact_info = 1;
+}
+
