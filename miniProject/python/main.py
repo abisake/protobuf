@@ -4,6 +4,9 @@ import proto.account_pb2 as acc
 import proto.user_pb2 as user
 import proto.product_pb2 as product
 import proto.phone_book_pb2 as phone_book
+import google.protobuf.field_mask_pb2 as field_mask
+
+
 
 def account():
     return acc.Account(
@@ -58,6 +61,42 @@ def phone_book2():
     
     return ph_book
 
+def field_mask1():
+    # field mask is way to hide or remove some fields from a message
+    # ideal when you multiple clients, not everyone needs all the data
+    account1 = account()
+    print(account1)  # for dedbugging
+    # mention the field name that needs to visible
+    mask = field_mask.FieldMask(paths=
+        ['id', 'name']
+    )
+    
+    # create an another message, where the masked structure will be stored
+    account1Result = acc.Account()
+    
+    mask.MergeMessage(account1, account1Result)
+    
+    return account1Result
+
+def field_mask2():
+    # we can merge two field mask into a mask, by doing union of the two masks
+    acc1 = account()
+    print(acc1)
+    
+    mask1 = field_mask.FieldMask()
+    mask1.FromJsonString('id,name')
+    mask2 = field_mask.FieldMask()
+    mask2.FromJsonString('id,followIds') # in proto it was follow_ids, 
+    # but in json field name will be in camelCase
+    
+    mask3 = field_mask.FieldMask()
+    mask3.Union(mask1, mask2)
+    
+    accResult1 = acc.Account()
+    mask3.MergeMessage(acc1, accResult1)
+    return accResult1
+    
+
 if __name__ == "__main__":
     # A map where key=arguments, value=function needs to be called
     functionMap = {
@@ -67,7 +106,9 @@ if __name__ == "__main__":
         'product1'  :   product1,
         'product2'  :   product2,
         'phone1'    :   phone_book1,
-        'phone2'    :   phone_book2
+        'phone2'    :   phone_book2,
+        'field1'    :   field_mask1,
+        'field2'    :   field_mask2
     }
     
     # on calling this program, more than 2 flags should throw error
