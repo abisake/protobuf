@@ -5,7 +5,7 @@ import proto.user_pb2 as user
 import proto.product_pb2 as product
 import proto.phone_book_pb2 as phone_book
 import google.protobuf.field_mask_pb2 as field_mask
-
+import google.protobuf.wrappers_pb2 as wrappers
 
 
 def account():
@@ -96,6 +96,14 @@ def field_mask2():
     mask3.MergeMessage(acc1, accResult1)
     return accResult1
     
+def wrapper():
+    return [
+        wrappers.BoolValue(value=True),
+        wrappers.BytesValue(value=b'This a byte string'),
+        wrappers.DoubleValue(value=31240421),
+        wrappers.FloatValue(value=3.14),
+        # many more wrappers
+    ]
 
 if __name__ == "__main__":
     # A map where key=arguments, value=function needs to be called
@@ -108,7 +116,8 @@ if __name__ == "__main__":
         'phone1'    :   phone_book1,
         'phone2'    :   phone_book2,
         'field1'    :   field_mask1,
-        'field2'    :   field_mask2
+        'field2'    :   field_mask2,
+        'wrappers'  :   wrapper
     }
     
     # on calling this program, more than 2 flags should throw error
